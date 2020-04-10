@@ -7,19 +7,30 @@ func FindRegexGroups(regex *regexp.Regexp, data string) map[string][]string {
 	matches := regex.FindAllStringSubmatch(data, -1)
 
 	groups := map[string][]string{}
-
 	groupNames := regex.SubexpNames()
 
 	// Add each group
-	for _, group := range groupNames {
-		groups[group] = []string{}
+	for _, groupName := range groupNames {
+		if groupName == "" {
+			continue
+		}
+		groups[groupName] = []string{}
 	}
 
 	// For every match
 	for _, match := range matches {
 		// For every group in this match
-		for i, group := range match {
-			groups[groupNames[i]] = append(groups[groupNames[i]], group)
+		for i, groupMatch := range match {
+			// Skip if match is empty
+			if groupMatch == "" {
+				continue
+			}
+			// Skip if groupName is empty
+			if groupNames[i] == "" {
+				continue
+			}
+
+			groups[groupNames[i]] = append(groups[groupNames[i]], groupMatch)
 		}
 	}
 
