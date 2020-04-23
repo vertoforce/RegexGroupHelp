@@ -1,3 +1,3 @@
-module github.com/vertoforce/regexgrouphelp
+module github.com/vertoforce/RegexGroupHelp
 
 go 1.13
